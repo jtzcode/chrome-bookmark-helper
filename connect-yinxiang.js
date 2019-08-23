@@ -1,5 +1,7 @@
 var Evernote = require('evernote');
 var developerToken = "developer-token";
+// Developer token can be applied here: https://app.yinxiang.com/api/DeveloperToken.action
+// Developer guide of JavaScript: https://github.com/yinxiang-dev/evernote-sdk-js
  
 //var client = new Evernote.Client({token: developerToken});
 
