@@ -10,5 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "evernote": "^2.0.5"
+  },
+  "devDependencies": {
+    "browserify": "^16.5.0"
   }
 }
