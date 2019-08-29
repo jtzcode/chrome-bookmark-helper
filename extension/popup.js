@@ -6,7 +6,11 @@ let createNoteBtn = document.getElementById('createNote');
 }); */
 //let noteStore;
 let targetNoteBook, targetNote;
-let listAllNotes = function() {
+
+let nBody = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+nBody += "<!DOCTYPE en-note SYSTEM \"http://xml.evernote.com/pub/enml2.dtd\">";
+
+let uploadBookmarks = function() {
     if(globalNoteStore) {
         globalNoteStore.listNotebooks().then(function(notebooks) {
             // notebooks is the list of Notebook objects
@@ -24,16 +28,30 @@ let listAllNotes = function() {
         });
     }
 };
-let createOrUpdateBookmarkNote = function(name) {
-    if (globalNoteStore) {
-        console.log("Start to create a new note with store.");
-        createOrUpdateNote(globalNoteStore, name, '@@Citrix: https://www.citrix.com', targetNoteBook, targetNote, (note) => {
+
+let syncBookmark = function(title, filter) {
+    let notes = "{";
+    chrome.bookmarks.search(filter, (bookmarks) => {
+        bookmarks.forEach(bookmark => {
+            notes += ('"' + bookmark.title + '": ' + encodeURIComponent(bookmark.url) + ',');
+        });
+        notes = notes.slice(0, -1);
+        notes += "}";
+        nBody += "<en-note>" + notes + "</en-note>";
+        createOrUpdateNote(globalNoteStore, title, nBody, targetNoteBook, targetNote, (note) => {
             console.log('Note updated: ' + note.title);
         });
+    });
+};
+
+let createOrUpdateBookmarkNote = function(title) {
+    if (globalNoteStore) {
+        console.log("Start to create/update a note with store.");
+        syncBookmark(title, "Globalization");
     }
 }
 
 createNoteBtn.addEventListener('click', (event) => {
-    listAllNotes();
+    uploadBookmarks();
 });
 

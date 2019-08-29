@@ -4,6 +4,7 @@
     "description": "Chrome bookmark helper inside wall!",
     "permissions": [
         "storage",
+        "bookmarks",
         "https://*/*"
     ],
     "background": {

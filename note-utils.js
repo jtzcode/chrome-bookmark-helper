@@ -1,5 +1,5 @@
 var Evernote = require('evernote');
-var developerToken = "developer token";
+var developerToken = "S=s17:U=329694:E=16ce1846ccb:C=16cbd77e518:P=1cd:A=en-devtoken:V=2:H=3291db9581500c1dea5de583562e0c14";
 // Developer token can be applied here: https://app.yinxiang.com/api/DeveloperToken.action
 // Developer guide of JavaScript: https://github.com/yinxiang-dev/evernote-sdk-js
  
@@ -17,14 +17,11 @@ targetNoteFilter = new Evernote.NoteStore.NoteFilter();
 targetNoteResultSpec = new Evernote.NoteStore.NotesMetadataResultSpec();
 
 createOrUpdateNote = function (noteStore, noteTitle, noteBody, parentNotebook, targetNote, callback) {
-  var nBody = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
-  nBody += "<!DOCTYPE en-note SYSTEM \"http://xml.evernote.com/pub/enml2.dtd\">";
-  nBody += "<en-note>" + noteBody + "</en-note>";
  
   // Create note object
   var ourNote = new Evernote.Types.Note();
   ourNote.title = noteTitle;
-  ourNote.content = nBody;
+  ourNote.content = noteBody;
  
   // parentNotebook is optional; if omitted, default notebook is used
   if (parentNotebook) {

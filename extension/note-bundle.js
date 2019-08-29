@@ -34397,23 +34397,20 @@ globalNoteStore = client.getNoteStore();
 targetNoteFilter = new Evernote.NoteStore.NoteFilter();
 targetNoteResultSpec = new Evernote.NoteStore.NotesMetadataResultSpec();
 
-createOrUpdateNote = function (noteStore, noteTitle, noteBody, parentNotebook, guid, callback) {
-  var nBody = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
-  nBody += "<!DOCTYPE en-note SYSTEM \"http://xml.evernote.com/pub/enml2.dtd\">";
-  nBody += "<en-note>" + noteBody + "</en-note>";
+createOrUpdateNote = function (noteStore, noteTitle, noteBody, parentNotebook, targetNote, callback) {
  
   // Create note object
   var ourNote = new Evernote.Types.Note();
   ourNote.title = noteTitle;
-  ourNote.content = nBody;
+  ourNote.content = noteBody;
  
   // parentNotebook is optional; if omitted, default notebook is used
   if (parentNotebook) {
     ourNote.notebookGuid = parentNotebook;
   }
 
-  if (guid) {
-    ourNote.guid = guid;
+  if (targetNote) {
+    ourNote.guid = targetNote;
     noteStore.updateNote(ourNote)
       .then(function(note) {
         callback(note);
