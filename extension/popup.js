@@ -10,6 +10,32 @@ let targetNoteBook, targetNote;
 let nBody = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
 nBody += "<!DOCTYPE en-note SYSTEM \"http://xml.evernote.com/pub/enml2.dtd\">";
 
+
+let refreshBookmarks = function() {
+    if(globalNoteStore) {
+        globalNoteStore.listNotebooks().then(function(notebooks) {
+            // notebooks is the list of Notebook objects
+            var noteBooks = notebooks.filter(book => book.name === '资料');
+            targetNoteBook = noteBooks[0].guid;
+            targetNoteFilter.title === 'Favorite Sites';
+            globalNoteStore.findNotesMetadata(targetNoteFilter, 0, 100, targetNoteResultSpec).then((result) => {
+                if(result && result.notes) {
+                    targetNote = result.notes[0].guid;
+                }
+                globalNoteStore.getNote(targetNote, true, false, false, false).then((note) => {
+                    //let content = JSON.parse(note.content);
+                    //Needs to parse with XML parser and then JSON parser.
+                    //console.log(content);
+                    //create/update a bookmark
+                });
+                
+            });
+          }, (e) => {
+              console.log(e);
+        });
+    }
+};
+
 let uploadBookmarks = function() {
     if(globalNoteStore) {
         globalNoteStore.listNotebooks().then(function(notebooks) {
@@ -52,6 +78,7 @@ let createOrUpdateBookmarkNote = function(title) {
 }
 
 createNoteBtn.addEventListener('click', (event) => {
-    uploadBookmarks();
+    //uploadBookmarks();
+    refreshBookmarks();
 });
 
