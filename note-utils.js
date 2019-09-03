@@ -4,7 +4,7 @@ var developerToken = "developer_token";
 // Developer guide of JavaScript: https://github.com/yinxiang-dev/evernote-sdk-js
  
 //var client = new Evernote.Client({token: developerToken});
-
+var parseString = require('xml2js').parseString;
 var client = new Evernote.Client({
     token: developerToken,
     sandbox: false,
@@ -15,6 +15,7 @@ var client = new Evernote.Client({
 globalNoteStore = client.getNoteStore();
 targetNoteFilter = new Evernote.NoteStore.NoteFilter();
 targetNoteResultSpec = new Evernote.NoteStore.NotesMetadataResultSpec();
+XMLParser = parseString;
 
 createOrUpdateNote = function (noteStore, noteTitle, noteBody, parentNotebook, targetNote, callback) {
  
