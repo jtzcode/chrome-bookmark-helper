@@ -14,8 +14,11 @@
     }]);
     console.log("Add rules.")
 }); */
+let globalNoteStore;
+let evernoteClient;
+let createNote;
+let targetNoteFilter;
+let targetNoteResultSpec;
+let XMLParser;
+
 console.log("Background loaded.");
-
-
-
-

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <meta charset="UTF-8">
+    <head>
+        <title>Bookmark Helper Options</title>
+        <link rel="stylesheet" href="styles/options.css">
+    </head>
+    <body>
+        <div class="storage-type-container opt-container">
+            <div class="storage-type-label">目标存储</div>
+            <div class="storage-type-data">
+                <select class="storage-type-select">
+                    <option value="evernote">印象笔记</option>
+                </select>
+            </div>
+        </div>
+        <div class="evernote-container opt-container">
+            <div class="ever-notebook-label">选择一个笔记本</div>
+            <div class="ever-notebook-data">
+                <select class="ever-notebook-select">
+                    <option value="default">未选择任何笔记本</option>
+                </select>
+            </div>
+
+            <div class="ever-note-label">选择一个笔记</div>
+            <div class="ever-note-data">
+                <select class="ever-note-select">
+                    <option value="default">未选择任何笔记</option>
+                </select>
+            </div>
+        </div>
+        <div class="options-footer opt-container">
+            <div class="opptions-status"></div>
+            <button class="options-save">保存</button>
+        </div>
+
+        <script src="jquery.min.js"></script>
+        <script src="options.js"></script>
+    </body>
+</html>

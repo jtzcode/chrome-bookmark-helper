@@ -4,13 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "bundle:sync": "node_modules/.bin/browserify extension/sync.js -o sync-bundle.js"
   },
   "author": "jtzcode",
   "license": "ISC",
   "dependencies": {
     "evernote": "^2.0.5",
-    "xml2js": "^0.4.21"
+    "xml2js": "^0.4.22"
   },
   "devDependencies": {
     "browserify": "^16.5.0"
