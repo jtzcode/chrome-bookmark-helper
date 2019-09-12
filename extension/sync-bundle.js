@@ -7,7 +7,7 @@ let Evernote = require('evernote');
 // Developer guide of JavaScript: https://github.com/yinxiang-dev/evernote-sdk-js
 
 let authenticated = false;
-let developer_token = 'S=s17:U=329694:E=16d29f8b9af:C=16d05ec3448:P=1cd:A=en-devtoken:V=2:H=ea9b3c12dee6447cea5c30c45bd67e81';
+let developer_token = '';
 let storageType = 'everenote';
 let nBody = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
 nBody += "<!DOCTYPE en-note SYSTEM \"http://xml.evernote.com/pub/enml2.dtd\">";
@@ -17,27 +17,30 @@ let targetFolderName = "Evernote Sync"
 let initStorage = () => {
     console.log("Storage init starts.");
     return new Promise((resolve, reject) => { 
-        chrome.storage.sync.get({
-            noteType: 'evernote',
-        }, (items) => {
-            storageType = items.noteType;
+        chrome.storage.local.get([
+            'noteType'
+        ], (items) => {
+            storageType = items['noteType'];
             if (storageType === 'evernote') {
-                chrome.storage.sync.get({
-                    auth_token: developer_token
-                }, (results) => {
+                chrome.storage.local.get([
+                    'access_token'
+                ], (results) => {
                         try {
-                            console.log("Token: " + results.auth_token);
+                            console.log("Token: " + results['access_token']);
                             evernoteClient = new Evernote.Client({
-                                token: developer_token,
-                                sandbox: false,
+                                token: results['access_token'],
+                                sandbox: true,
                                 china: true,
+                                serviceHost: "sandbox.yinxiang.com"
                             });
-                            authenticated = true;
-                            setAuthData(authenticated, results.auth_token, evernoteClient);
-                            resolve({ state: 'success' });
+                            if (results.access_token) {
+                                authenticated = true;
+                                setAuthData(authenticated, results['access_token']);
+                                resolve({ state: 'success' });
+                            }
                         } catch (e) {
                             authenticated = false;
-                            setAuthData(authenticated, '', null);
+                            setAuthData(authenticated, undefined);
                             reject("Auth failed.");
                             console.log(e);
                         }
@@ -49,11 +52,10 @@ let initStorage = () => {
     });
 };
 
-let setAuthData = (status, token, client) => {
-    chrome.storage.sync.set({
-        authenticated: status,
-        auth_token: token,
-        noteClient: client
+let setAuthData = (status, token) => {
+    chrome.storage.local.set({
+        'authenticated': status,
+        'access_token': token
       }, () => {
           console.log("Authentication status set to: " + status);
     });
@@ -72,7 +74,7 @@ initStorage().then((result) => {
 
 let syncBookmarks = () => {
     console.log("Bookmark sync starts.");
-    startSyncBookmarks('资料', 'My Sites', 'Globalization');
+    //startSyncBookmarks('Test', 'My Sites', 'Globalization');
 };
  
 let prepare = () => {

@@ -1,3 +1,11 @@
 .opt-container {
     margin: 50px 10px;
 }
+
+.display-element {
+    display: block;
+}
+
+.hide-element {
+    display: none;
+}
